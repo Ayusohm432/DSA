@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<conio.h>
 #include<stdlib.h>
+#include<stdbool.h>
 
 
 void swap(int* x , int* y){
@@ -275,14 +276,14 @@ void insertion_sorted_array(struct Array* arr , int val){
     arr->length++;
 }
 
-int is_sorted(struct Array arr){
+bool is_sorted(struct Array arr){
     int i;
     for(i=0 ; i<arr.length-1 ; i++){
         if(arr.A[i] > arr.A[i+1]){
-            return 0;
+            return false;
         }
     }
-    return 1;
+    return true;
 }
 
 void rearrange(struct Array* arr){
@@ -343,116 +344,208 @@ struct Array merge_sorted(struct Array arr1 , struct Array arr2){
     }
     return arr3;
 }
+
+struct Array Union(struct Array arr1 , struct Array arr2){
+    struct Array arr3;
+    arr3.length = 0;
+    arr3.size = arr1.size + arr2.size;
+
+    
+    int i=0;
+    int j=0;
+    int k=0;
+
+    while(i<arr1.length && j<arr2.length){
+        if(arr1.A[i] < arr2.A[j]){
+            arr3.A[k++] = arr1.A[i++];
+        }
+        else if(arr2.A[j] < arr1.A[i]){
+            arr3.A[k++] = arr2.A[j++];
+        }
+        else{
+            arr3.A[k++] = arr1.A[i++];
+            j++;
+        }
+        arr3.length++;
+    }
+    while(j < arr2.length){
+        arr3.A[k++] = arr2.A[j++];
+        arr3.length++;
+    }
+    return arr3;
+}
+
+struct Array Intersection(struct Array arr1 , struct Array arr2){
+    struct Array arr3;
+    arr3.length = 0;
+    arr3.size = arr1.size + arr2.size;
+
+    int k = 0;
+
+    for(int i=0 ; i<arr1.length ; i++){
+        for(int j=0 ; j<arr2.length ; j++){
+            if(arr1.A[i] == arr2.A[j]){
+                arr3.A[k++] = arr1.A[i];
+                arr3.length++;
+                break;
+            }
+        }
+    }
+    return arr3;
+}
+
+struct Array Difference(struct Array arr1 , struct Array arr2){
+    struct Array arr3;
+    arr3.length = 0;
+    arr3.size = arr1.size + arr2.size;
+
+    int k = 0;
+    bool flag;
+
+    for(int i=0 ; i<arr1.length ; i++){
+        flag = false;
+        for(int j=0 ; j<arr2.length ; j++){
+            if(arr1.A[i] == arr2.A[j]){
+                flag = true;
+                break;
+            }
+        }
+        if(!flag){
+            arr3.A[k++] = arr1.A[i];
+            arr3.length++;
+        }
+    }
+    return arr3;
+}
 int main(){
-    // struct Array arr = {{10,20,30,40,50},20,5};// stores {A[i],size,length};
-    // Append(&arr,60);
-    // Insert(&arr,2,100);
-    // Display(arr);
-    // printf("\n%d",Delete(&arr,4));
-    // Display(arr);
+    struct Array arr = {{10,20,30,40,50},20,5};// stores {A[i],size,length};
+    Append(&arr,60);
+    Insert(&arr,2,100);
+    Display(arr);
+    printf("\n%d",Delete(&arr,4));
+    Display(arr);
 
-    // int key = 30;
-    // printf("\n%d",Linear_Search(arr,key));
-    // printf("\n%d", Linear_Search_Transposition(&arr,key));
-    // Display(arr);
-    // printf("\n%d", Linear_Search_MoveToFront(&arr,key));
-    // Display(arr);
+    int key = 30;
+    printf("\n%d",Linear_Search(arr,key));
+    printf("\n%d", Linear_Search_Transposition(&arr,key));
+    Display(arr);
+    printf("\n%d", Linear_Search_MoveToFront(&arr,key));
+    Display(arr);
 
-    // printf("\n\n\n");
-    // struct Array arr1 = {{10,20,30,40,50,60,70,80,90,100},20,10};
-    // printf(" %d\n",Binary_Search_Iterative(arr1,30));
-    // printf("%d\n",Binary_Search_Iterative(arr1,00));
-    // printf(" %d\n",Binary_Search_Recursive(arr1,0,arr1.length,40));
-    // printf("%d\n",Binary_Search_Recursive(arr1,0,arr1.length,35));
+    printf("\n\n\n");
+    struct Array arr1 = {{10,20,30,40,50,60,70,80,90,100},20,10};
+    printf(" %d\n",Binary_Search_Iterative(arr1,30));
+    printf("%d\n",Binary_Search_Iterative(arr1,00));
+    printf(" %d\n",Binary_Search_Recursive(arr1,0,arr1.length,40));
+    printf("%d\n",Binary_Search_Recursive(arr1,0,arr1.length,35));
 
-    // printf("\n\n\n");
-    // Display(arr1);
-    // printf("\n%d",get(arr1,5));
-    // set(&arr1,4,45);
-    // Display(arr1);
-    // printf("\n%d",Max(arr1));
-    // printf("\n%d",Min(arr1));
-    // printf("\n%d",Sum_Iterartive(arr1));
-    // printf("\n%d",Sum_Recursive(arr1,arr1.length-1));
-    // printf("\n%f",average(arr1));
+    printf("\n\n\n");
+    Display(arr1);
+    printf("\n%d",get(arr1,5));
+    set(&arr1,4,45);
+    Display(arr1);
+    printf("\n%d",Max(arr1));
+    printf("\n%d",Min(arr1));
+    printf("\n%d",Sum_Iterartive(arr1));
+    printf("\n%d",Sum_Recursive(arr1,arr1.length-1));
+    printf("\n%f",average(arr1));
 
 
 
-    // printf("\n\n\n");
-    // struct Array arr2 = {{1,2,3,4,5,6,7,8,9},10,9};
-    // Display(arr2);
-    // reverse(&arr2);
-    // Display(arr2);
+    printf("\n\n\n");
+    struct Array arr2 = {{1,2,3,4,5,6,7,8,9},10,9};
+    Display(arr2);
+    reverse(&arr2);
+    Display(arr2);
 
-    // printf("\n\n\n");
-    // struct Array arr3 = {{1,2,3,4,5,6,7,8,9},10,9};
-    // Display(arr3);
-    // Reverse(&arr3);
-    // Display(arr3);
+    printf("\n\n\n");
+    struct Array arr3 = {{1,2,3,4,5,6,7,8,9},10,9};
+    Display(arr3);
+    Reverse(&arr3);
+    Display(arr3);
 
     
-    // printf("\n\n\n");
-    // struct Array arr3 = {{1,2,3,4,5,6,7,8,9},10,9};
-    // Display(arr3);
-    // reverse_range(&arr3,0,5);
-    // Display(arr3);
+    printf("\n\n\n");
+    struct Array arr3 = {{1,2,3,4,5,6,7,8,9},10,9};
+    Display(arr3);
+    reverse_range(&arr3,0,5);
+    Display(arr3);
     
     
 
-    // printf("\n\n\n");
-    // struct Array arr4 = {{1,2,3,4,5,6,7,8,9},10,9};
-    // Display(arr4);
-    // left_Shift(&arr4,5);
-    // Display(arr4);
+    printf("\n\n\n");
+    struct Array arr4 = {{1,2,3,4,5,6,7,8,9},10,9};
+    Display(arr4);
+    left_Shift(&arr4,5);
+    Display(arr4);
 
-    // printf("\n\n\n");
-    // struct Array arr5 = {{1,2,3,4,5,6,7,8,9},10,9};
-    // Display(arr5);
-    // right_Shift(&arr5,5);
-    // Display(arr5);
+    printf("\n\n\n");
+    struct Array arr5 = {{1,2,3,4,5,6,7,8,9},10,9};
+    Display(arr5);
+    right_Shift(&arr5,5);
+    Display(arr5);
 
-    // printf("\n\n\n");
-    // struct Array arr6 = {{1,2,3,4,5,6,7,8,9},10,9};
-    // Display(arr6);
-    // rotate_left(&arr6,3);
-    // Display(arr6);
+    printf("\n\n\n");
+    struct Array arr6 = {{1,2,3,4,5,6,7,8,9},10,9};
+    Display(arr6);
+    rotate_left(&arr6,3);
+    Display(arr6);
 
-    // printf("\n\n\n");
-    // struct Array arr7 = {{1,2,3,4,5,6,7,8,9},10,9};
-    // Display(arr7);
-    // rotate_right(&arr7,4);
-    // Display(arr7);
+    printf("\n\n\n");
+    struct Array arr7 = {{1,2,3,4,5,6,7,8,9},10,9};
+    Display(arr7);
+    rotate_right(&arr7,4);
+    Display(arr7);
 
-    // printf("\n\n\n");
-    // struct Array arr8 = {{10,20,30,40,50,60,70,80,90},10,9};
-    // Display(arr8);
-    // insertion_sorted_array(&arr8,55);
-    // insertion_sorted_array(&arr8,13);
-    // Display(arr8);
+    printf("\n\n\n");
+    struct Array arr8 = {{10,20,30,40,50,60,70,80,90},10,9};
+    Display(arr8);
+    insertion_sorted_array(&arr8,55);
+    insertion_sorted_array(&arr8,13);
+    Display(arr8);
 
-    // printf("\n%d",is_sorted(arr8));
+    printf("\n%d",is_sorted(arr8));
 
-    // struct Array arr9 = {{2,-4,3,-2,-5,7,-3,-7,6,5,10,8},20,12};
-    // Display(arr9);
-    // rearrange(&arr9);
-    // Display(arr9);
+    struct Array arr9 = {{2,-4,3,-2,-5,7,-3,-7,6,5,10,8},20,12};
+    Display(arr9);
+    rearrange(&arr9);
+    Display(arr9);
     
-    // printf("\n\n\n");
-    // struct Array arr10 = {{3,6,23,54,63,2},10,6};
-    // struct Array arr11 = {{1,45,75,9,5,10,65},10,7};
-    // struct Array arr12 = merge(arr10 , arr11);
-    // Display(arr10);
-    // Display(arr11);
-    // Display(arr12);
+    printf("\n\n\n");
+    struct Array arr10 = {{3,6,23,54,63,2},10,6};
+    struct Array arr11 = {{1,45,75,9,5,10,65},10,7};
+    struct Array arr12 = merge(arr10 , arr11);
+    Display(arr10);
+    Display(arr11);
+    Display(arr12);
 
-    // printf("\n\n\n");
-    // struct Array arr13 = {{1,2,3,6,8,20},10,6};
-    // struct Array arr14 = {{5,10,16,28,30,35,40,45},10,8};
-    // struct Array arr15 = merge_sorted(arr13,arr14);
-    // Display(arr13);
-    // Display(arr14);
-    // Display(arr15);
+    printf("\n\n\n");
+    struct Array arr13 = {{1,2,3,6,8,10,20},10,7};
+    struct Array arr14 = {{2,5,10,16,20,28,30,35,40,45},10,10};
+    struct Array arr15 = merge_sorted(arr13,arr14);
+    Display(arr13);
+    Display(arr14);
+    Display(arr15);
 
+    printf("\n\n\n");
+    Display(arr13);
+    Display(arr14);
+    struct Array arr16 = Union(arr13,arr14);
+    Display(arr16); 
+
+    printf("\n\n\n");
+    Display(arr13);
+    Display(arr14);
+    struct Array arr17 = Intersection(arr13,arr14);
+    Display(arr17);   
+
+    printf("\n\n\n");
+    Display(arr13);
+    Display(arr14);
+    struct Array arr18 = Difference(arr13,arr14);
+    struct Array arr19 = Difference(arr14,arr13);
+    Display(arr18);
+    Display(arr19);
 
     return 0;
 }
