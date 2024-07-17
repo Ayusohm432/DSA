@@ -1,39 +1,41 @@
 #include <iostream>
+#include <cstdio>
+#include <cstdlib>
 using namespace std;
 
-
+template<class T>
 class Array{
     private:
-        int *A;
+        T *A;
         int size;
         int length;
-        void Swap(int* x , int* y);
+        void Swap(T* x , T* y);
     public:
         Array(){
             size = 100;
-            A = new int[100];
+            A = new T[100];
             length = 0;
         }
         Array(int size){
             this->size = size;
             length = 0;
-            A = new int[size];  
+            A = new T[size];  
         }
         void Display();
-        void Append(int x);
-        void Insert(int index , int x);
-        int Delete(int index);
-        int Linear_Search(int key);
-        int Linear_Search_Transposition(int key);
-        int Linear_Search_MoveToFront(int key);
-        int Binary_Search_Iterative(int key);
-        int Binary_Search_Recursive(int low , int high , int key);
-        int Get(int index);
-        void Set(int index , int x);
-        int Max();
-        int Min();
-        int Sum_Iterartive();
-        int Sum_Recursive(int n);
+        void Append(T x);
+        void Insert(int index , T x);
+        T Delete(int index);
+        int Linear_Search(T key);
+        int Linear_Search_Transposition(T key);
+        int Linear_Search_MoveToFront(T key);
+        int Binary_Search_Iterative(T key);
+        int Binary_Search_Recursive(int low , int high , T key);
+        T Get(int index);
+        void Set(int index , T x);
+        T Max();
+        T Min();
+        T Sum_Iterartive();
+        T Sum_Recursive(int n);
         float Average();
         void Reverse1();
         void Reverse();
@@ -42,41 +44,46 @@ class Array{
         void right_Shift(int count);
         void Rotate_left(int count);
         void Rotate_right(int count);
-        void Insertion_sorted_array(int val);
+        void Insertion_sorted_Array(T val);
         bool is_sorted();
         void rearrange();
-        Array Merge(Array arr2);
-        Array Merge_sorted(Array arr2);
-        Array Union(Array arr2);
-        Array Intersection(Array arr2);
-        Array Difference(Array arr2);
+        Array<T> Merge(Array<T> arr2);
+        Array<T> Merge_sorted(Array<T> arr2);
+        Array<T> Union(Array<T> arr2);
+        Array<T> Intersection(Array<T> arr2);
+        Array<T> Difference(Array<T> arr2);
         ~Array(){
             delete []A;
         }
 };
 
-void Array :: Swap(int* x , int* y){
-    int temp;
+template<class T>
+void Array<T> :: Swap(T* x , T* y){
+    T temp;
     temp = *x;
     *x = *y;
     *y = temp;
 }
 
-void Array :: Display(){
+template<class T>
+void Array<T> :: Display(){
     int i;
     printf("\nElements Are :- ");
     for(i=0 ; i<length ; i++){
-        printf("%d ",A[i]);
+        cout<<A[i]<<" ";
     }
 }
 
-void Array :: Append(int x){
+template<class T>
+void Array<T> :: Append(T x){
     if(length < size){
         A[length++] = x;
     }
 }
 
-void Array :: Insert(int index , int x){
+
+template<class T>
+void Array<T> :: Insert(int index , T x){
     if(index >= 0 && index <= length){
         for(int i=length ; i>index ; i--){
              A[i] = A[i-1];
@@ -86,8 +93,9 @@ void Array :: Insert(int index , int x){
     }
 }
 
-int Array :: Delete(int index){
-    int x = 0;
+template<class T>
+T Array<T> :: Delete(int index){
+    T x = 0;
     int i;
     if(index >= 0 && index <= length){
         x = A[index];
@@ -100,7 +108,8 @@ int Array :: Delete(int index){
     return -1;
 }
 
-int Array :: Linear_Search(int key){
+template<class T>
+int Array<T> :: Linear_Search(T key){
     int i;
     for(i=0 ; i<length ; i++){
         if(key == A[i]){
@@ -110,18 +119,22 @@ int Array :: Linear_Search(int key){
     return -1;
 }
 
-int Array :: Linear_Search_Transposition(int key){
+template<class T>
+int Array<T> :: Linear_Search_Transposition(T key){
     int i;
     for(i=0 ; i<length ; i++){
         if(key == A[i]){
-            Swap(&A[i] , &A[i-1]);
+            if(i > 0) {
+                Swap(&A[i] , &A[i-1]);
+            }
             return i;
         }
     }
     return -1;
 }
 
-int Array :: Linear_Search_MoveToFront(int key){
+template<class T>
+int Array<T> :: Linear_Search_MoveToFront(T key){
     int i;
     for(i=0 ; i<length ; i++){
         if(key == A[i]){
@@ -131,8 +144,8 @@ int Array :: Linear_Search_MoveToFront(int key){
     }
     return -1;
 }
-
-int Array :: Binary_Search_Iterative(int key){
+template<class T>
+int Array<T> :: Binary_Search_Iterative(T key){
     int low,mid,high;
     low = 0;
     high = length;
@@ -152,7 +165,8 @@ int Array :: Binary_Search_Iterative(int key){
     return -1;
 }
 
-int Array :: Binary_Search_Recursive(int low , int high , int key){
+template<class T>
+int Array<T> :: Binary_Search_Recursive(int low , int high , T key){
     int mid;
     if(low <= high){
         mid = (low+high)/2;
@@ -169,20 +183,23 @@ int Array :: Binary_Search_Recursive(int low , int high , int key){
     return -1;
 }
 
-int Array :: Get(int index){
+template<class T>
+T Array<T> :: Get(int index){
     if(index >=0 && index<length){
         return A[index];
     }
     return -1;
 }
 
-void Array :: Set(int index , int x){
+template<class T>
+void Array<T> :: Set(int index , T x){
     if(index >=0 && index < length){
         A[index] = x;
     }
 }
 
-int Array :: Max(){
+template<class T>
+T Array<T> :: Max(){
     int max = A[0];
     int i;
     for(i=1 ; i<length ; i++){
@@ -193,7 +210,8 @@ int Array :: Max(){
     return max;
 }
 
-int Array :: Min(){
+template<class T>
+T Array<T> :: Min(){
     int min = A[0];
     int i;
     for(i=1 ; i<length ; i++){
@@ -204,7 +222,8 @@ int Array :: Min(){
     return min;
 }
 
-int Array :: Sum_Iterartive(){
+template<class T>
+T Array<T> :: Sum_Iterartive(){
     int sum = 0;
     int i;
     for(i=0 ; i<length ; i++){
@@ -213,18 +232,21 @@ int Array :: Sum_Iterartive(){
     return sum;
 }
 
-int Array :: Sum_Recursive(int n){
-    if(n<0){
+template<class T>
+T Array<T> :: Sum_Recursive(int n){
+    if(n < 0){
         return 0;
     }
-    return Sum_Recursive(n-1)+A[n];
+    return A[n] + Sum_Recursive(n-1);
 }
 
-float Array :: Average(){
+template<class T>
+float Array<T> :: Average(){
     return (float)Sum_Iterartive()/length;
 }
 
-void Array :: Reverse1(){
+template<class T>
+void Array<T> :: Reverse1(){
     int i=0;
     int j= length-1;
     while(i<j){
@@ -240,21 +262,25 @@ void Array :: Reverse1(){
     */
 }
 
-void Array :: Reverse(){
+template<class T>
+void Array<T> :: Reverse(){
     int n = length;
     int* temp;
-    temp = new int[n];
+    temp = new T[n];
 
-    for(int i=0 , j=n-1 ; i<n , j>=0 ; i++ , j--){
+    for(int i=0 , j=n-1 ; i<n ; i++ , j--){
         temp[i] = A[j];
     } 
 
     for(int i=0 ; i<n ; i++){
         A[i] = temp[i];
     }
+    delete []temp;
 }
 
-void Array :: Reverse_range(int start , int end){
+
+template<class T>
+void Array<T> :: Reverse_range(int start , int end){
     while(start<end){
         Swap(&A[start] , &A[end]);
         start++;
@@ -262,7 +288,8 @@ void Array :: Reverse_range(int start , int end){
     }
 }
 
-void Array :: Left_Shift(int count){
+template<class T>
+void Array<T> :: Left_Shift(int count){
     int n = length;
     int i;
     for(i=0 ; i<n-count ; i++){
@@ -273,7 +300,8 @@ void Array :: Left_Shift(int count){
     }
 }
 
-void Array :: right_Shift(int count){
+template<class T>
+void Array<T> :: right_Shift(int count){
     int n = length-1;
 
     for(int i=n ; i>=count ; i--){
@@ -284,7 +312,8 @@ void Array :: right_Shift(int count){
     }
 }
 
-void Array :: Rotate_left(int count){
+template<class T>
+void Array<T> :: Rotate_left(int count){
     int n = length;
     
     count %= n;
@@ -297,7 +326,8 @@ void Array :: Rotate_left(int count){
 
 }
 
-void Array ::  Rotate_right(int count){
+template<class T>
+void Array<T> ::  Rotate_right(int count){
     int n =  length;
     
     Reverse_range(0,n-1);
@@ -307,7 +337,8 @@ void Array ::  Rotate_right(int count){
     Reverse_range(count,n-1);    
 }
 
-void Array :: Insertion_sorted_array(int val){
+template<class T>
+void Array<T> :: Insertion_sorted_Array(T val){
     int i = length-1;
     if(length == size){
         return;
@@ -321,7 +352,8 @@ void Array :: Insertion_sorted_array(int val){
     length++;
 }
 
-bool Array :: is_sorted(){
+template<class T>
+bool Array<T> :: is_sorted(){
     int i;
     for(i=0 ; i<length-1 ; i++){
         if(A[i] > A[i+1]){
@@ -331,7 +363,8 @@ bool Array :: is_sorted(){
     return true;
 }
 
-void Array :: rearrange(){
+template<class T>
+void Array<T> :: rearrange(){
     int i,j;
     i = 0;
     j = length-1;
@@ -349,8 +382,9 @@ void Array :: rearrange(){
     }
 }
 
-Array Array :: Merge(Array arr2){
-    Array arr3;
+template<class T>
+Array<T> Array<T> :: Merge(Array<T> arr2){
+    Array<T> arr3;
     arr3.length = length + arr2.length;
     arr3.size = size + arr2.size;
 
@@ -365,8 +399,9 @@ Array Array :: Merge(Array arr2){
     return arr3;
 }
 
-Array Array :: Merge_sorted(Array arr2){
-    Array arr3;
+template<class T>
+Array<T> Array<T> :: Merge_sorted(Array<T> arr2){
+    Array<T> arr3;
     arr3.length = length + arr2.length;
     arr3.size = size + arr2.size;
 
@@ -390,8 +425,9 @@ Array Array :: Merge_sorted(Array arr2){
     return arr3;
 }
 
-Array Array :: Union(Array arr2){
-    Array arr3;
+template<class T>
+Array<T> Array<T> :: Union(Array<T> arr2){
+    Array<T> arr3;
     arr3.length = 0;
     arr3.size = size + arr2.size;
 
@@ -420,8 +456,9 @@ Array Array :: Union(Array arr2){
     return arr3;
 }
 
-Array Array :: Intersection(Array arr2){
-    Array arr3;
+template<class T>
+Array<T> Array<T> :: Intersection(Array<T> arr2){
+    Array<T> arr3;
     arr3.length = 0;
     arr3.size = size + arr2.size;
 
@@ -439,8 +476,9 @@ Array Array :: Intersection(Array arr2){
     return arr3;
 }
 
-Array Array :: Difference(Array arr2){
-    Array arr3;
+template<class T>
+Array<T> Array<T> :: Difference(Array<T> arr2){
+    Array<T> arr3;
     arr3.length = 0;
     arr3.size = size + arr2.size;
 
@@ -464,8 +502,8 @@ Array Array :: Difference(Array arr2){
 }
 
 int main() {
-    
-    Array arr(10);
+
+    Array<int> arr(10);
 
     arr.Insert(0,5);
     arr.Insert(1,10);
@@ -474,8 +512,50 @@ int main() {
     arr.Insert(4,65);
     arr.Insert(5,78);
     arr.Display();
-    cout<<endl<<arr.Delete(0)<<endl;
+    cout<<endl<<arr.Delete(0);
     arr.Display();
+
+    cout<<endl<<endl;
+    
+    Array<float> arr1(10);
+    arr1.Insert(0,5.3);
+    arr1.Insert(1,10.5);
+    arr1.Insert(2,27.6);
+    arr1.Insert(3,5.7);
+    arr1.Insert(4,6.5);
+    arr1.Insert(5,7.8);
+    arr1.Display();
+    cout<<endl<<arr1.Delete(0)<<endl;
+    arr1.Display(); 
+
+
+    cout<<endl<<endl;
+
+    
+    Array<char> arr10(10);
+    arr10.Insert(0,'A');
+    arr10.Insert(1,'B');
+    arr10.Insert(2,'C');
+    arr10.Insert(3,'D');
+    arr10.Insert(4,'E');
+    arr10.Insert(5,'F');
+    arr10.Display();
+    cout<<endl<<arr10.Delete(0)<<endl;
+    arr10.Display();
+
+    cout<<endl<<endl;
+
+    
+    // Array<string> arr11(10);
+    // arr11.Insert(0,"What");
+    // arr11.Insert(1,"is");
+    // arr11.Insert(2,"the");
+    // arr11.Insert(3,"difference");
+    // arr11.Insert(4,"Between");
+    // arr11.Insert(5,"DSA");
+    // arr11.Display();
+    // cout<<endl<<arr11.Delete(5)<<endl;
+    // arr11.Display();
 
     return 0;
 }

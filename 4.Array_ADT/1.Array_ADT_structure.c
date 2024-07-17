@@ -3,7 +3,6 @@
 #include<stdlib.h>
 #include<stdbool.h>
 
-
 void swap(int* x , int* y){
     int temp;
     temp = *x;
@@ -466,10 +465,10 @@ int main(){
 
     
     printf("\n\n\n");
-    struct Array arr3 = {{1,2,3,4,5,6,7,8,9},10,9};
-    Display(arr3);
-    reverse_range(&arr3,0,5);
-    Display(arr3);
+    struct Array arr30 = {{1,2,3,4,5,6,7,8,9},10,9};
+    Display(arr30);
+    reverse_range(&arr30,0,5);
+    Display(arr30);
     
     
 

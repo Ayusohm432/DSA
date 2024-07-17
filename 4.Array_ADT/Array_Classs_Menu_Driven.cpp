@@ -465,17 +465,60 @@ Array Array :: Difference(Array arr2){
 
 int main() {
     
-    Array arr(10);
+    Array *arr1;
+    int ch,size; 
+    int element;
+    int index;
 
-    arr.Insert(0,5);
-    arr.Insert(1,10);
-    arr.Insert(2,27);
-    arr.Insert(3,57);
-    arr.Insert(4,65);
-    arr.Insert(5,78);
-    arr.Display();
-    cout<<endl<<arr.Delete(0)<<endl;
-    arr.Display();
+    printf("Enter Size of Array : ");
+    scanf("%d",&size);
+    arr1 = new Array(size);
+
+    do{
+        printf("\n\n\nMenu\n");
+        printf("1. Insert\n");
+        printf("2. Delete\n");
+        printf("3. Search\n");
+        printf("4. Sum\n");
+        printf("5. Dispaly\n");
+        printf("6. Exit");
+
+        printf("\n\n\nEnter Your Choice :- ");
+        scanf("%d",&ch);
+
+        switch(ch){
+            case 1:
+                printf("\nEnter an Element : ");
+                scanf("%d",&element);
+                printf("\nEnter Index : ");
+                scanf("%d",&index);
+                arr1->Insert(index , element);
+                break;
+
+            case 2:
+                printf("Enter Index for Element to be deleted : ");
+                scanf("%d",&index);
+                element = arr1->Delete(index);
+                printf("Deleted Element is %d\n",element);
+                break;
+
+            case 3: 
+                printf("Emter an element to search : ");
+                scanf("%d",&element);
+                index = arr1->Linear_Search(element);
+                printf("Element i=s Found at Index %d ",index);
+                break;
+                
+            case 4:
+                printf("Sum is : %d\n",arr1->Sum_Iterartive());
+                break;
+            
+            case 5:
+                arr1->Display();
+                break;
+
+        }
+    }while(ch<6);
 
     return 0;
 }
